@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lekcija 1 — Vježba</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; max-width: 580px; transition: background 0.3s, color 0.3s; }
+        h1 { font-size: 1.3rem; color: #343a40; }
+        .zadatak { border: 1px solid #dee2e6; padding: 1rem 1.25rem; border-radius: 8px; margin: 12px 0; }
+        .zadatak h3 { margin: 0 0 10px; font-size: 0.95rem; color: #495057; }
+        button { padding: 8px 14px; border: 1px solid #dee2e6; border-radius: 6px; cursor: pointer; background: white; margin: 3px; }
+        button:hover { background: #f8f9fa; }
+        .prikaz { margin-top: 8px; padding: 8px 12px; background: #f8f9fa; border-radius: 6px; min-height: 36px; font-size: 14px; }
+
+        /* Klase za zadatke — NE MIJENJAJ */
+        .istaknuto { background: #fff3cd; border-color: #ffc107; font-weight: bold; }
+        .greska-stil { background: #f8d7da; border-color: #f5c2c7; color: #842029; }
+        .uspjeh-stil { background: #d1e7dd; border-color: #badbcc; color: #0f5132; }
+        body.tamno { background: #212529; color: #f8f9fa; }
+        body.tamno .zadatak { background: #2d3748; border-color: #4a5568; }
+        body.tamno .prikaz { background: #1a202c; }
+        body.tamno button { background: #374151; color: #f8f9fa; border-color: #4a5568; }
+    </style>
+</head>
+<body>
+
+    <h1>Lekcija 1 — querySelector i classList vježba</h1>
+
+    <!-- ZADATAK 1 -->
+    <div class="zadatak">
+        <h3>Zadatak 1 — querySelector (2 boda)</h3>
+        <p id="z1tekst">Ovaj tekst treba biti promijenjen.</p>
+        <p id="z1info">Ovdje napiši svoje ime i razred.</p>
+        <!--
+            U scriptu ispod:
+            a) Dohvati element #z1tekst i promijeni tekst na:
+               "querySelector radi! ✓"
+
+            b) Dohvati element #z1info i promijeni tekst na:
+               "Ime: [tvoje ime] | Razred: [tvoj razred]"
+        -->
+    </div>
+
+    <!-- ZADATAK 2 -->
+    <div class="zadatak">
+        <h3>Zadatak 2 — querySelectorAll i petlja (3 boda)</h3>
+        <ul id="z2lista">
+            <li class="stavka">Stavka jedan</li>
+            <li class="stavka">Stavka dva</li>
+            <li class="stavka">Stavka tri</li>
+        </ul>
+        <!--
+            Dohvati SVE elemente s klasom "stavka"
+            i petljom promijeni svaki na:
+            "✓ [originalni tekst]"
+
+            Npr. "Stavka jedan" postaje "✓ Stavka jedan"
+
+            (hint: querySelectorAll + for...of petlja)
+        -->
+    </div>
+
+    <!-- ZADATAK 3 -->
+    <div class="zadatak">
+        <h3>Zadatak 3 — classList add/remove (3 boda)</h3>
+        <div class="prikaz" id="z3poruka">Ova poruka mijenja izgled.</div>
+        <button id="z3uspjeh">Zelena (uspjeh)</button>
+        <button id="z3greska">Crvena (greška)</button>
+        <button id="z3reset">Reset</button>
+        <!--
+            "Zelena" gumb → ukloni "greska-stil", dodaj "uspjeh-stil" na #z3poruka
+            "Crvena" gumb → ukloni "uspjeh-stil", dodaj "greska-stil"
+            "Reset" gumb  → ukloni obje klase
+        -->
+    </div>
+
+    <!-- ZADATAK 4 -->
+    <div class="zadatak">
+        <h3>Zadatak 4 — classList toggle (3 boda)</h3>
+        <button id="z4temaGumb">🌙 Tamni način</button>
+        <!--
+            Svaki klik na gumb:
+            → toggle klase "tamno" na document.body
+            → ako je tamno → tekst gumba: "☀️ Svijetli način"
+            → ako je svijetlo → tekst gumba: "🌙 Tamni način"
+
+            (hint: classList.contains za provjeru stanja)
+        -->
+    </div>
+
+    <script>
+        // =============================================
+        // ZADATAK 1
+        // =============================================
+        const z1tekst = document.querySelector("#z1tekst");
+        z1tekst.textContent = "querySelector radi! ✓";
+
+        const z1info = document.querySelector("#z1info");
+        z1info.textContent = "Ime: Luka Pasalic | Razred: 2.E";
+
+        // =============================================
+        // ZADATAK 2
+        // =============================================
+        const sveStavke = document.querySelectorAll(".stavka");
+
+        for (const stavka of sveStavke) {
+            stavka.textContent = "✓ " + stavka.textContent;
+        }
+
+        // =============================================
+        // ZADATAK 3
+        // =============================================
+        const z3poruka = document.querySelector("#z3poruka");
+
+        document.querySelector("#z3uspjeh").addEventListener("click", () => {
+            z3poruka.classList.remove("greska-stil");
+            z3poruka.classList.add("uspjeh-stil");
+        });
+
+        document.querySelector("#z3greska").addEventListener("click", () => {
+            z3poruka.classList.remove("uspjeh-stil");
+            z3poruka.classList.add("greska-stil");
+        });
+
+        document.querySelector("#z3reset").addEventListener("click", () => {
+            z3poruka.classList.remove("uspjeh-stil");
+            z3poruka.classList.remove("greska-stil");
+        });
+
+        // =============================================
+        // ZADATAK 4
+        // =============================================
+        const z4gumb = document.querySelector("#z4temaGumb");
+
+        z4gumb.addEventListener("click", () => {
+            document.body.classList.toggle("tamno");
+
+            if (document.body.classList.contains("tamno")) {
+                z4gumb.textContent = "☀️ Svijetli način";
+            } else {
+                z4gumb.textContent = "🌙 Tamni način";
+            }
+        });
+
+        // =============================================
+        // Otvori konzolu F12 — ne smije biti grešaka!
+        // =============================================
+    </script>
+</body>
+</html>
